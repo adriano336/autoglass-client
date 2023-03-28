@@ -1,0 +1,157 @@
+<div class="card mb-3" auto-contraste>
+  <div class="card-header" auto-contraste-destaque altera-fonte>
+    <h4>Produtos</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="filterForm">
+      <div class="form-row d-flex justify-content">
+        <div class="col-sm-12">
+          <div class="row mb-3">
+            <div class="col-sm-4 pr-0">
+              <div class="form-outline flex-fill">
+                <input
+                  class="form-control"
+                  formControlName="descricao"
+                  placeholder="Descrição"
+                  autocomplete
+                />
+              </div>
+            </div>
+            <!-- <div class="col-sm-2 pr-0">
+              <div class="form-outline flex-fill">
+                <input
+                  placeholder="Fabricado em"
+                  type="text"
+                  id="fab"
+                  class="form-control"
+                  formControlName="fabricado"
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                  bsDatepicker
+                />
+              </div>
+            </div>
+            <div class="col-sm-2 pr-0">
+              <div class="form-outline flex-fill">
+                <input
+                  placeholder="Vence/vencido em"
+                  type="text"
+                  id="venc"
+                  class="form-control"
+                  formControlName="vencido"
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                  bsDatepicker
+                />
+              </div>
+            </div> -->
+            <div class="col-sm-4 pr-0">
+              <div class="form-outline flex-fill">
+                <input
+                  class="form-control"
+                  formControlName="nomeFornecedor"
+                  placeholder="Nome do fornecedor"
+                  autocomplete
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="col d-flex flex-row align-items-right">
+        <button
+          auto-contraste-destaque
+          altera-fonte
+          class="btn btn-primary"
+          tooltip="Apagar"
+        >
+          <fa-icon class="imgBtn" icon="eraser"></fa-icon>
+        </button>
+
+        <button (click)="filtrar()"
+          style="margin-left: 15px"
+          auto-contraste-destaque
+          altera-fonte
+          class="btn btn-info ml-3"
+        >
+          <fa-icon class="imgBtn" icon="eye"></fa-icon>
+        </button>
+        <button
+          style="margin-left: 15px"
+          auto-contraste-destaque
+          altera-fonte
+          class="btn btn-danger ml-3"
+          [routerLink]="['/produto']"
+        >
+          <fa-icon class="imgBtn" icon="plus"></fa-icon>
+          Produto
+        </button>
+      </div>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Situação</th>
+          <th scope="col">Fabricado em</th>
+          <th scope="col">Vence em</th>
+          <th scope="col"># Fornecedor</th>
+          <th scope="col">Nome do fornecedor</th>
+          <th scope="col">CNPJ</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let p of produtos
+              | paginate : { itemsPerPage: 5, currentPage: currentPage }
+          "
+        >
+          <td scope="col">{{ p.id }}</td>
+          <td scope="col">{{ p.descricao }}</td>
+
+          <td scope="col" *ngIf="p.inativo; else ativo">Inativo</td>
+          <ng-template #ativo>
+            <td>Ativo</td>
+          </ng-template>
+          <td scope="col">{{ p.dataFabricacao | date : "dd/MM/yyyy" }}</td>
+          <td scope="col">{{ p.dataValidade | date : "dd/MM/yyyy" }}</td>
+          <td scope="col">{{ p.fornecedor?.id }}</td>
+          <td scope="col">{{ p.fornecedor?.nomeFornecedor }}</td>
+          <td scope="col">{{ p.fornecedor?.cnpj }}</td>
+          <td scope="col">
+            <span
+              [routerLink]="['produto', p.id]"
+              auto-contraste-destaque
+              altera-fonte
+              class="btn btn-warning"
+              tooltip="Edit"
+            >
+              <i class="fa-solid fa-file-pen"></i>
+            </span>
+          </td>
+          <td scope="col">
+            <span
+              (click)="excluir(p.id)"
+              auto-contraste-destaque
+              altera-fonte
+              class="btn btn-danger"
+              tooltip="Excl"
+            >
+              <i class="fa-solid fa-minus"></i>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <pagination-controls
+      (pageChange)="currentPage = $event"
+    ></pagination-controls>
+  </div>
+</div>

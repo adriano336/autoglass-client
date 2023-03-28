@@ -1,0 +1,122 @@
+<div class="card mb-3" auto-contraste>
+  <div class="card-header" auto-contraste-destaque altera-fonte>
+    <h4>Produtos</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="formProduto" (ngSubmit)="gravar()">
+      <div class="container">
+        <div class="row">
+          <div class="col mb-3">
+            <label for="descricao" class="form-label">Nome do produto</label>
+            <input
+              type="text"
+              class="form-control"
+              id="descricao"
+              formControlName="descricao"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="fabricacao" class="form-label">Fabricação</label>
+            <input
+              placeholder=""
+              type="text"
+              id="fabricacao"
+              class="form-control"
+              formControlName="fabricado"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+              bsDatepicker
+            />
+          </div>
+          <div class="col mb-3">
+            <label for="vencimento" class="form-label">Vencimento</label>
+            <input
+              placeholder=""
+              type="text"
+              id="vencimento"
+              class="form-control"
+              formControlName="vencimento"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+              bsDatepicker
+            />
+          </div>
+          <div class="row">
+            <div class="col-sm-3 mb-3">
+              <label for="fornecedorId" class="form-label">Fornecedores</label>
+              <select
+                #fornecs
+                (change)="fornecedorSelecionado()"
+                class="form-control"
+                formControlName="fornecedorId"
+                id="fornecedorId"
+              >
+                <option
+                  *ngFor="let fornec of fornecedores; let i = index"
+                  [value]="fornec.id"
+                >
+                  {{ fornec.nomeFornecedor }}
+                </option>
+
+              </select>
+
+              <button
+              class="btn btn-primary" type="button" Value="Novo" (click)="novoFor()"
+            >Novo</button>
+            </div>
+            <!-- <button
+              class="btn btn-outline-secondary dropdown-toggle"
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+            Fornecedor
+            </button>
+            <label for="fornecedores">Fornecedores</label>
+            <select formControlName="fornecedores" id="fornecedores">
+              <option *ngFor="let fornec of fornecedores; let i = index" [value]="fornec.id">
+                {{fornec.nomeFornecedor}}
+              </option>
+            </select> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="nomeFor" class="form-label">Nome do fornecedor</label>
+            <input
+              [readOnly]="desabilita"
+              type="email"
+              class="form-control"
+              id="nomeFor"
+              formControlName="nomeFor"
+            />
+          </div>
+          <div class="col">
+            <label for="cnpj" class="form-label">CNPJ</label>
+            <input
+              [readOnly]="desabilita"
+              type="email"
+              class="form-control"
+              id="cnpj"
+              formControlName="cnpj"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="inativo" />
+            <label class="form-check-label" for="exampleCheck1">Inativo</label>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline-primary" [routerLink]="['']">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary" style="margin-left: 20px">
+        Gravar
+      </button>
+    </form>
+  </div>
+</div>
